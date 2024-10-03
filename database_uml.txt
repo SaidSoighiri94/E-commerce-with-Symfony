@@ -1,0 +1,36 @@
+1- User 
+    - civility
+    - full_name
+    - email
+    - password
+
+2- Product 
+    - name
+    - slug 
+    - descrioption
+    - more_description
+    - additional_infos
+    - stock
+    - solde_price
+    - regular_price
+    - categories
+    - relatedProducts
+    - reviews
+    - imageUrls
+    - brand
+    - status
+    - isBestSeller
+    - isNewarrival
+    - isFeutured
+    - isSpecialOffer
+    - options
+
+
+3- Category
+    - name
+    - slug
+    - descrioption
+    - products
+    - imageUrls
+    - isMega
+    
