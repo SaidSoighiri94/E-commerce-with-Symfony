@@ -9,6 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 
 class UserCrudController extends AbstractCrudController
@@ -30,7 +32,25 @@ class UserCrudController extends AbstractCrudController
             ]),
             TextField::new('full_name'),
             EmailField::new('email'),
-            TextField::new('password')->hideOnIndex()->hideWhenUpdating(),
+            TextField::new('password')
+            ->setFormType(RepeatedType::class)
+            ->setFormTypeOptions([
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'label' => 'Password',
+                    'row_attr' => [
+                        'class'=>"col-md-6 col-xxl-5"
+                    ]
+                ],
+                'second_options' =>[
+                    'label' =>'Cofirm Password',
+                    'row_attr' => [
+                        'class'=>"col-md-6 col-xxl-5"
+                    ],
+                ],
+                'mapped' => false,
+            ])
+            ->onlyOnForms(),
             
         ];
     }
