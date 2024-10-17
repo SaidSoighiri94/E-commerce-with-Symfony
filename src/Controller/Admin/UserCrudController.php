@@ -3,14 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 
 class UserCrudController extends AbstractCrudController
@@ -50,9 +54,25 @@ class UserCrudController extends AbstractCrudController
                 ],
                 'mapped' => false,
             ])
+            ->setRequired($pageName === Crud::PAGE_NEW)
             ->onlyOnForms(),
             
         ];
+    }
+    public function createNewFormBuilder(
+        EntityDto $entityDto,
+        KeyValueStore $formOptions,
+        AdminContext $context): FormBulderInterface
+    {
+        $formBuilder = parent::createNewFormBuilder($entityDto,$formOptions,$context);
+
+        return $this->addPasswordEvenListener($formBuilder);
+    }
+    public function addPasswordEventListener(FormBuilderInterface $formBuilder){
+        return  $formBuilder->addEventListener(ForEvents::POST_SUBMIT,$this->hashPassword());
+    }
+    public function hashPassword(){
+        
     }
     
 }
