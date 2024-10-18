@@ -40,7 +40,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Ecomerce Symfony');
+            ->setTitle('Medney Shop');
     }
 
     public function configureMenuItems(): iterable
