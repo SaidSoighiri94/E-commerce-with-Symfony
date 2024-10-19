@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -23,11 +24,13 @@ class CategoryCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            TextField::new('slug')->setTargetFieldName('name'),
+            SlugField::new('slug')
+                ->setTargetFieldName('name'),
             TextEditorField::new('description'),
             BooleanField::new('isMega'),
             ImageField::new('imageUrl')
-            ->setUploadDir("public/assets/images/categories"),
+                ->setUploadDir("public/assets/images/categories")
+                ->setBasePath('assets/images/categories'),
 
         ];
     }
